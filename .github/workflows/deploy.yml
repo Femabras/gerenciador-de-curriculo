@@ -14,6 +14,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    # CRITICAL: This sets the default context for 'run:' commands (npm ci, npm run build)
+    # to the 'frontend' sub-folder
+    defaults:
+      run:
+        working-directory: ./frontend
+
     steps:
       # 1. Checkout the repository code
       - name: Checkout
@@ -23,29 +30,29 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20" # Use a stable Node.js version
+          node-version: "20"
           cache: "npm"
+          # Path must be relative to the repository root for this action
+          cache-dependency-path: frontend/package-lock.json
 
-      # 3. Install dependencies from package-lock.json (faster than 'npm install')
+      # 3. Install dependencies - runs inside 'frontend' folder
       - name: Install dependencies
         run: npm ci
 
-      # 4. Build the React application
-      # Vite uses 'dist' as the output directory
+      # 4. Build the React application - runs inside 'frontend' folder
       - name: Build
         run: npm run build
 
-      # 5. Configure GitHub Pages environment
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      # 6. Upload the 'dist' folder content as a deployment artifact
-      - name: Upload artifact
+      # 5. Upload the 'dist' folder content as a deployment artifact
+      # We now use the standard upload action, pointing to the nested dist folder.
+      - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./dist"
+          # Path to the build output, relative to the job root. This is the directory that
+          # contains your index.html file after the build.
+          path: "./frontend/dist"
 
-      # 7. Deploy the uploaded artifact to GitHub Pages
+      # 6. Deploy the uploaded artifact to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
