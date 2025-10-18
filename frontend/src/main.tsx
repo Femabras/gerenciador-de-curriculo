@@ -1,10 +1,12 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import React from "react"; // Importing React is required for JSX transformation (still needed even with React 18)
+import ReactDOM from "react-dom/client"; // ReactDOM creates and controls the root element
+import App from "./App"; // Importing our root component
+import "./index.css"; // Global styles import
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+// React 18+ uses `createRoot()` instead of the old `ReactDOM.render()`
+// because React 18 introduces concurrent rendering (better performance, async UI handling)
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
     <App />
-  </StrictMode>,
-)
+  </React.StrictMode>
+);
