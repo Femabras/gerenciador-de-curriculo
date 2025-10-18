@@ -27,13 +27,12 @@ jobs:
         uses: actions/checkout@v4
 
       # 2. Setup Node.js environment
+      # Removed 'cache' and 'cache-dependency-path' to bypass the nested path error.
+      # Dependencies will be installed in Step 3.
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
-          # Path must be relative to the repository root for this action
-          cache-dependency-path: frontend/package-lock.json
 
       # 3. Install dependencies - runs inside 'frontend' folder
       - name: Install dependencies
@@ -44,15 +43,13 @@ jobs:
         run: npm run build
 
       # 5. Upload the 'dist' folder content as a deployment artifact
-      # We now use the standard upload action, pointing to the nested dist folder.
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Path to the build output, relative to the job root. This is the directory that
-          # contains your index.html file after the build.
+          # Path to the build output, relative to the job root.
           path: "./frontend/dist"
 
       # 6. Deploy the uploaded artifact to GitHub Pages
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions:deploy-pages@v4
