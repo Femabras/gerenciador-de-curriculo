@@ -37,9 +37,11 @@ jobs:
 
       # 4. Install dependencies - now runs correctly from within the 'frontend' folder
       # Note: We use 'npm ci' and rely on the preceding 'cd frontend' step.
+      # This will now execute as: cd frontend && npm ci
       - name: Install dependencies
-        # This will now execute as: cd frontend && npm ci
-        run: npm ci
+        run: |
+          cd frontend
+          npm ci
 
       # 5. Build the React application
       - name: Build
