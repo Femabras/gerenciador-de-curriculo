@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-midnight-green: #001514;
+  --color-soft-white: #fbfffe;
+  --color-electric-blue: #1e90ff;
+  --color-vibrant-purple: #9b5de5;
+  --color-charcoal-text: #0a0f0f;
+  --color-muted-gray: #8ea5a1;
+  --color-primary-dark-effect: #001514a0;
+}
+
+/* body {
+    color: #001514a0
+} */
+/* 
+ChatGPT Color Palette
+
+Midnight Green: #001514
+Soft White: #fbfffe
+Electric Blue: #1E90FF
+Vibrant Purple: #9b5de5
+Charcoal Text: #0a0f0f
+Muted Gray: #8ea5a1
+
+Gemini Color Palette
+
+Primary Base	#001514 (Deep Teal Black)
+Secondary Base	#FBFFFE (Near White)
+Primary Accent	#007BFF (Bright, Medium Blue)
+Secondary Accent	#A454EC (Medium Vivid Purple)
+
+*/
